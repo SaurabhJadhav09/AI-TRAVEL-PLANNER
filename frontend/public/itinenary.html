@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <title>Itinerary Input</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --error-color: #f44336;
+            --border-color: #ddd;
+            --border-radius: 5px;
+            --input-padding: 10px;
+            --button-padding: 10px 15px;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f8fa;
+            text-align: left; /* Align the text content to the left */
+    
+        }
+        
+        .main-container {
+            margin-top: 80px; /* Adjust the top margin to create space for the header */
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: #fff;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: var(--input-padding);
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus, input[type="date"]:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        button {
+            padding: var(--button-padding);
+            margin-right: 10px;
+            border-radius: var(--border-radius);
+            border: none;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            filter: brightness(90%);
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .deleteEntry {
+            background-color: var(--error-color);
+            color: white;
+        }
+        
+        .entry {
+            margin-bottom: 20px;
+        }
+
+        .header-container {
+            background-color: #3498db; /* Header background color */
+            text-align: center;
+        }
+
+        .header-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /* Ensure it appears above other content */
+            overflow: hidden; /* Add scrollbars if the content overflows */
+        }
+        
+        .header {
+            background-color: #212529;
+            padding: 20px 0;
+            text-align: left;
+            color: #8ab92d;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+
+        .saved-itinerary-item {
+            background-color: #f1f1f1;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            position: relative;
+        }
+        
+        .deleteSavedItinerary {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--error-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: var(--button-padding);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .deleteSavedItinerary:hover {
+            filter: brightness(90%);
+        }
+        
+        .itinerary-date,
+        .itinerary-destination,
+        .itinerary-budget,
+        .itinerary-activity {
+            margin-bottom: 10px;
+        }
+
+        .itinerary {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .itinerary h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    
+        .itinerary-data {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .itinerary-data p {
+            flex-basis: 48%;
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        
+        .itinerary-data p strong {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    
+        .delete-button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+                /* Add this CSS code to your existing styles */
+        .budget-input {
+            /* Maintain the appearance of a text input */
+            -moz-appearance: textfield;
+            appearance: textfield;
+            width: 100%;
+            padding: var(--input-padding);
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            transition: border-color 0.3s;
+        }
+
+        .budget-input::-webkit-inner-spin-button,
+        .budget-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+
+        /* Additional styling for focus state */
+        .budget-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        
+
+    </style>
+</head>
+<body>
+
+<div class = "header-container">   
+    <div class="header-wrapper">
+        <div class="header">
+            <div class="website-name">🛺Tales Of India</div>
+        </div>
+    </div>
+</div>    
+
+<div class = "main-container">
+    <div class="container">
+        <h2>Enter Your Itinerary Details</h2>
+        <form action="/submit_itinerary" method="post" id="itineraryForm">
+            <div class="entry">
+                <label for="date">Date:</label>
+                <input type="date" name="date[]" required>
+
+                <label for="destination">Destination:</label>
+                <input type="text" name="destination[]" placeholder="Enter destination" required>
+
+                <label for="budget">Budget:</label>
+                <input type="number" name="budget[]" placeholder="Enter budget in ₹" class="budget-input" required>
+
+                <label for="activity">Activity:</label>
+                <textarea name="activity[]" rows="20" placeholder="Describe your activity"></textarea>
+                
+                <button type="button" class="deleteEntry">Delete</button>
+            </div>
+
+            <button type="button" id="addEntry">Add Another Entry</button>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+</div>    
+
+<div class="container">
+    <h2>Your Saved Itineraries</h2>
+    <ul id="savedItineraries">
+        <!-- The saved itineraries will be displayed here as list items. -->
+    </ul>
+</div>
+
+
+<script>
+    document.getElementById('addEntry').addEventListener('click', function() {
+        var entryDiv = document.createElement('div');
+        entryDiv.className = 'entry';
+
+        var dateLabel = document.createElement('label');
+        dateLabel.innerHTML = 'Date:';
+        var dateInput = document.createElement('input');
+        dateInput.type = 'date';
+        dateInput.name = 'date[]';
+
+        var destLabel = document.createElement('label');
+        destLabel.innerHTML = 'Destination:';
+        var destInput = document.createElement('input');
+        destInput.type = 'text';
+        destInput.name = 'destination[]';
+        destInput.placeholder = 'Enter destination';
+
+        var activityLabel = document.createElement('label');
+        activityLabel.innerHTML = 'Activity:';
+        var activityInput = document.createElement('textarea');
+        activityInput.name = 'activity[]';
+        activityInput.rows = '4';
+        activityInput.placeholder = 'Describe your activity';
+
+        // Budget Row for new entries
+        var budgetLabel = document.createElement('label');
+        budgetLabel.innerHTML = 'Budget:';
+        var budgetInput = document.createElement('input');
+        budgetInput.type = 'text';
+        budgetInput.name = 'budget[]';
+        budgetInput.placeholder = 'Enter budget';
+
+        var deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.type = 'button';
+        deleteButton.className = 'deleteEntry';
+        deleteButton.addEventListener('click', function() {
+            entryDiv.remove();
+        });
+
+        entryDiv.appendChild(dateLabel);
+        entryDiv.appendChild(dateInput);
+        entryDiv.appendChild(destLabel);
+        entryDiv.appendChild(destInput);
+        entryDiv.appendChild(activityLabel);
+        entryDiv.appendChild(activityInput);
+        entryDiv.appendChild(budgetLabel);  // Attach budget label
+        entryDiv.appendChild(budgetInput);  // Attach budget input
+        entryDiv.appendChild(deleteButton);
+
+        document.getElementById('itineraryForm').insertBefore(entryDiv, document.getElementById('addEntry'));
+    });
+
+    document.querySelectorAll('.deleteEntry').forEach(function(button) {
+        button.addEventListener('click', function() {
+            button.parentElement.remove();
+        });
+    });
+
+    document.getElementById('itineraryForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Stop the form from actually submitting
+    
+        var dateInputs = document.querySelectorAll('input[name="date[]"]');
+        var destinationInputs = document.querySelectorAll('input[name="destination[]"]');
+        var budgetInputs = document.querySelectorAll('input[name="budget[]"]');
+        var activityTextAreas = document.querySelectorAll('textarea[name="activity[]"]');
+    
+        var savedItinerariesDiv = document.getElementById('savedItineraries');
+    
+        for (var i = 0; i < dateInputs.length; i++) {
+            var listItem = document.createElement('li');
+            listItem.classList.add('saved-itinerary-item');
+    
+            // Constructing the innerHTML in a more structured manner
+            listItem.innerHTML = `
+                <div class="itinerary-date">Date: ${dateInputs[i].value}</div>
+                <div class="itinerary-destination">Destination: ${destinationInputs[i].value}</div>
+                <div class="itinerary-budget">Budget: ${budgetInputs[i].value}</div>
+                <div class="itinerary-activity">Activity: ${activityTextAreas[i].value}</div>
+                <button class="deleteSavedItinerary">Delete</button>
+            `;
+    
+            listItem.querySelector('.deleteSavedItinerary').addEventListener('click', function() {
+                savedItinerariesDiv.removeChild(listItem);
+            });
+    
+            savedItinerariesDiv.appendChild(listItem);
+        }
+    
+        // Optionally, reset the form after "saving" the itineraries
+        e.target.reset();
+    });
+    
+
+        // Function to load saved itineraries
+        function loadSavedItineraries() {
+            const savedItineraries = localStorage.getItem('itineraryData');
+            if (savedItineraries) {
+                const savedContent = document.getElementById('savedContent');
+                savedContent.innerHTML = '';
+    
+                const itineraries = JSON.parse(savedItineraries);
+                itineraries.forEach((itinerary, index) => {
+                    const itineraryPreview = document.createElement('div');
+                    itineraryPreview.classList.add('itinerary');
+    
+                    itineraryPreview.innerHTML = `
+                        <h3>Itinerary ${index + 1}</h3>
+                        <div class="itinerary-data">
+                            <p><strong>Date:</strong> ${itinerary[0].date}</p>
+                            <p><strong>Destination:</strong> ${itinerary[0].destination}</p>
+                            <p><strong>Budget:</strong> ${itinerary[0].budget}</p>
+                            <p><strong>Activity:</strong><br>${itinerary[0].activity}</p>
+                            <p><strong>Companion:</strong> ${itinerary[0].companion}</p>
+                        </div>
+                        <button class="delete-button" onclick="deleteSavedItinerary(${index})">Delete Itinerary</button>
+                    `;
+                    savedContent.appendChild(itineraryPreview);
+                });
+            }
+        }
+    
+    
+
+</script>
+
+</body>
+</html>

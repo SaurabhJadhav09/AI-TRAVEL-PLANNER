@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Form</title>
+
+  <link rel="stylesheet" href="./css/register.css">
+</head>
+<body>
+  <div class="form-container">
+    <form id="registerForm">
+      <h3>Sign Up</h3>
+      <div id="errorMsg"></div>
+
+      <input type="text" id="name" required placeholder="Enter your name">
+      <input type="email" id="email" required placeholder="Enter your email">
+      <input type="password" id="password" required placeholder="Enter your password">
+      <input type="password" id="cpassword" required placeholder="Confirm your password">
+
+      <input type="submit" value="Sign Up" class="form-btn">
+
+      <p>Already have an account? <a href="login_form.html">Login now</a></p>
+      <p><a href="index.html"><u>Home</u></a></p>
+    </form>
+  </div>
+
+  <script src="./js/register_form.js"></script>
+</body>
+</html>
